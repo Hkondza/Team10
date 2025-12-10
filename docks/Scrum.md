@@ -39,6 +39,7 @@ Odabrani su User Storyji koji nemaju vanjske ovisnosti i predstavljaju osnovu su
 - **KAN-9 – Hashiranje lozinke**
 
 Naprednije funkcionalnosti, poput prijave studenata na oglase i komunikacije s poslodavcima, planirane su za sljedeće sprintove zbog tehničkih ovisnosti (UI, backend infrastruktura).
+Sprint 1 provodi se u Kanban okruženju korištenjem označavanja User Storyja.
 
 ---
 
