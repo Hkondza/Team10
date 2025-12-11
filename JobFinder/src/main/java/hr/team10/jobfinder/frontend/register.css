@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+body {
+    background: white;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* LEFT BLUE PANEL — smoother curve + adjusted colors */
+.left-panel {
+    flex: 1;
+    background: linear-gradient(#16c4d4, #0e8ea0);
+    border-bottom-right-radius: 55% 18%;
+}
+
+
+.right-panel {
+    flex: 1;
+    padding: 60px;
+}
+
+h1 {
+    color: #00858f;
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 800;
+}
+
+h2 {
+    color: #00858f;
+    font-size: 26px;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+
+.input-group {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #bfbfbf;
+    margin-bottom: 30px;
+    padding: 6px 0;
+}
+
+.input-group input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    font-size: 15px;
+    color: #444;
+}
+
+.fa-regular fa-eye {
+    cursor: pointer;
+    opacity: 0.4;
+}
+
+
+.role-select {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 35px;
+    color: #888;
+}
+
+.role-select input {
+    margin-right: 6px;
+}
+
+
+.btn {
+    width: 100%;
+    padding: 16px;
+    background: #16c4d4;
+    border: none;
+    border-radius: 40px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.btn:hover {
+    background: #13b2c1;
+}
+
+
+.login-link {
+    margin-top: 22px;
+    text-align: center;
+    color: #aaa;
+}
+
+.login-link a {
+    color: #00858f;
+    text-decoration: none;
+    font-weight: bold;
+}
