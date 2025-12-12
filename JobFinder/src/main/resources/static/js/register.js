@@ -6,7 +6,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     e.preventDefault();
 
     const data = {
-        fullName: document.getElementById("fullname").value.trim(),
+        fullName: document.getElementById("fullName").value.trim(),
         email: document.getElementById("email").value.trim(),
         password: document.getElementById("password").value.trim(),
         role: document.getElementById("role").value
