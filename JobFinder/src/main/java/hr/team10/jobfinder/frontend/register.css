@@ -46,9 +46,16 @@ h2 {
 .input-group {
     display: flex;
     align-items: center;
-    border-bottom: 2px solid #bfbfbf;
+    border-bottom: 2px solid #e0e0e0;
     margin-bottom: 30px;
     padding: 6px 0;
+    transition: border-color 0.3s ease;
+
+}
+
+.input-group:focus-within{
+          border-bottom-color: #16c4d4;
+
 }
 
 .input-group input {
@@ -94,6 +101,11 @@ h2 {
     background: #13b2c1;
 }
 
+.submit-link a{
+ text-decoration: none;
+ color: white;
+ font-weight: 600;
+}
 
 .login-link {
     margin-top: 22px;
@@ -105,4 +117,8 @@ h2 {
     color: #00858f;
     text-decoration: none;
     font-weight: bold;
+}
+
+.login-link a:hover{
+    text-decoration: underline;
 }
