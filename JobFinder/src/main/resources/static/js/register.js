@@ -37,4 +37,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         console.error("Greška:", error);
         alert("Server nije dostupan.");
     }
+
+
+
 });
