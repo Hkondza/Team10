@@ -27,8 +27,7 @@ public class AuthController {
 
         User user = new User(
                 null,
-                req.firstName,
-                req.lastName,
+                req.fullName,
                 req.email,
                 req.password,
                 req.role

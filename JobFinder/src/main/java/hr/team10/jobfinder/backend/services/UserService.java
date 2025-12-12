@@ -24,8 +24,7 @@ public class UserService {
 
         User user = new User(
                 idCounter++,
-                request.firstName,
-                request.lastName,
+                request.fullName,
                 request.email,
                 hashed,
                 request.role
