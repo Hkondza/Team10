@@ -1,7 +1,9 @@
 package hr.team10.jobfinder.backend.controller;
 
+import hr.team10.jobfinder.backend.dto.LoginRequest;
 import hr.team10.jobfinder.backend.dto.RegisterRequest;
 import hr.team10.jobfinder.backend.model.User;
+import hr.team10.jobfinder.backend.repo.UserRepository;
 import hr.team10.jobfinder.backend.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,19 +11,43 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    public AuthController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
+    // REGISTER
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest request){
-        return userService.register(request);
+    public User register(@RequestBody RegisterRequest req) {
+
+        if (userRepository.existsByEmail(req.email)) {
+            throw new RuntimeException("User already exists");
+        }
+
+        User user = new User(
+                null,
+                req.firstName,
+                req.lastName,
+                req.email,
+                req.password,
+                req.role
+        );
+
+        return userRepository.save(user);
     }
 
-    @GetMapping("/users")
-    public Object getUsers(){
-        return userService.getAllUsers();
+    // LOGIN
+    @PostMapping("/login")
+    public User login(@RequestBody LoginRequest req) {
+
+        User user = userRepository.findByEmail(req.email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!user.getPassword().equals(req.password)) {
+            throw new RuntimeException("Wrong password");
+        }
+
+        return user;
     }
 }

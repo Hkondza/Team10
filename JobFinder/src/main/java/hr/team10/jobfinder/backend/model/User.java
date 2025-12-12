@@ -1,29 +1,27 @@
 package hr.team10.jobfinder.backend.model;
 
+import jakarta.persistence.*;
+import lombok.*;
 
-import lombok.Data;
-
-@Data
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String firstName;
     private String lastName;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String password;
-    private String role; // STUDENT or EMPLOYER
 
-    public User() {}
-
-    public User(Long id, String firstName, String lastName, String email, String password, String role) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
-
+    private String role;
 }
-
