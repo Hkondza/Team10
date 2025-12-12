@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <title>JobFinder - Početna</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            height: 60px;
+            background-color: #1a73e8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: white;
+            color: #1a73e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* LOGIN BOX */
+        .login-container {
+            margin: 80px auto;
+            width: 350px;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            display: none;
+        }
+
+        .login-container h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0f5cd6;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">JobFinder</div>
+
+    <div class="nav-right" id="navRight">
+        <!-- Dinamički se puni JavaScriptom -->
+    </div>
+</div>
+
+<!-- LOGIN FORM -->
+<div class="login-container" id="loginBox">
+    <h2>Prijava</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Lozinka">
+    <button onclick="login()">Prijavi se</button>
+</div>
+
+<script>
+    // Simulacija je li korisnik logiran
+    // TI ĆEŠ OVO KASNIJE ZAMIJENITI sa stvarnim backendom
+    let loggedUser = null; // Ako user postoji -> prikazuje ime
+
+    function renderNavbar() {
+        const navRight = document.getElementById("navRight");
+        const loginBox = document.getElementById("loginBox");
+
+        if (loggedUser) {
+            // Ako je ulogiran
+            navRight.innerHTML = `
+                <span>${loggedUser.firstName} ${loggedUser.lastName}</span>
+                <div class="user-icon">${loggedUser.firstName[0].toUpperCase()}</div>
+            `;
+            loginBox.style.display = "none";
+        } else {
+            // Ako NIJE ulogiran — pokaži login
+            navRight.innerHTML = `
+                <button onclick="toggleLogin()">Login</button>
+            `;
+            loginBox.style.display = "block";
+        }
+    }
+
+    function toggleLogin() {
+        const loginBox = document.getElementById("loginBox");
+        loginBox.style.display = loginBox.style.display === "block" ? "none" : "block";
+    }
+
+    function login() {
+        // PRIVREMENO — simulacija
+        loggedUser = {
+            firstName: "Marko",
+            lastName: "Marić"
+        };
+
+        renderNavbar();
+    }
+
+    // INIT
+    renderNavbar();
+</script>
+
+</body>
+</html>
