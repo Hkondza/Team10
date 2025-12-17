@@ -28,7 +28,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
             // --- ADDED: 200ms Delay and Redirection ---
             const delayInMilliseconds = 200;
-            const targetURL = 'main.html';
+            const targetURL = "main.html";
 
             setTimeout(function() {
                 // This line executes after 200 milliseconds
