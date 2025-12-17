@@ -6,8 +6,7 @@ GO
 
 CREATE TABLE users (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    first_name NVARCHAR(100),
-    last_name NVARCHAR(100),
+    full_name NVARCHAR(100),
     email NVARCHAR(150) UNIQUE NOT NULL,
     password NVARCHAR(255) NOT NULL,
     role NVARCHAR(50) NOT NULL
