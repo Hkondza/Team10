@@ -11,3 +11,15 @@ CREATE TABLE users (
     password NVARCHAR(255) NOT NULL,
     role NVARCHAR(50) NOT NULL
 );
+
+
+
+
+/*		
+	   ALTER DATABASE [Team10]
+      SET SINGLE_USER
+      WITH ROLLBACK IMMEDIATE;
+    -- now we’re safe to drop
+    DROP DATABASE [Team10];
+	GO
+	*/

@@ -13,7 +13,7 @@ public class JobFinderApplication {
 
         try {
             // Works on ALL Windows setups
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler http://localhost:8080/");
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler http://localhost:8080/login.html");
         } catch (Exception e) {
             System.out.println("Could not open browser: " + e.getMessage());
         }
