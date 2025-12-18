@@ -9,24 +9,6 @@
 </head>
 <body>
 
-<script>
-    // 🔐 PROVJERA LOGIN-A
-    const userJson = localStorage.getItem("loggedUser");
-
-    if (!userJson) {
-        window.location.href = "login.html";
-    }
-
-    const user = JSON.parse(userJson);
-
-    document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("profileName").innerText = user.fullName;
-        document.getElementById("profileNameHeader").innerText = user.fullName;
-        document.getElementById("profileEmail").innerText = user.email;
-        document.getElementById("profileEmail").href = "mailto:" + user.email;
-        document.getElementById("profileRole").innerText = user.role;
-    });
-</script>
 
 <!-- NAVBAR -->
 <div class="navbar">
@@ -38,10 +20,14 @@
         <div class="nav-buttons">
             <button class="btn-show-jobs">Show all jobs</button>
         </div>
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search">
+
+        <a href="create-job.html">
+        <div class="nav-buttons">
+            <button class="btn-show-jobs" >Show all jobs</button>
         </div>
+        </a>
+        <div class="nav-buttons" id="roleButtons"></div>
+
     </div>
 
     <div class="navbar-right">
@@ -101,4 +87,52 @@
 </div>
 
 </body>
+
+<script>
+    // 🔐 PROVJERA LOGIN-A
+    const userJson = localStorage.getItem("loggedUser");
+
+    if (!userJson) {
+        window.location.href = "login.html";
+    }
+
+    const user = JSON.parse(userJson);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("profileName").innerText = user.fullName;
+        document.getElementById("profileNameHeader").innerText = user.fullName;
+        document.getElementById("profileEmail").innerText = user.email;
+        document.getElementById("profileEmail").href = "mailto:" + user.email;
+        document.getElementById("profileRole").innerText = user.role;
+    });
+</script>
+
+<script>
+    const user = JSON.parse(localStorage.getItem("loggedUser"));
+
+    if (!user) {
+        window.location.href = "login.html";
+    }
+
+    const roleButtons = document.getElementById("roleButtons");
+
+    if (user.role === "student") {
+        roleButtons.innerHTML = `
+      <button onclick="window.location.href='student-jobs.html'">
+        Show all jobs
+      </button>
+    `;
+    }
+
+    if (user.role === "employer") {
+        roleButtons.innerHTML = `
+      <button onclick="window.location.href='create-job.html'">
+        Create job
+      </button>
+      <button onclick="window.location.href='employer-jobs.html'">
+        My jobs
+      </button>
+    `;
+    }
+</script>
 </html>

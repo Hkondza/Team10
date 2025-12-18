@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Job</title>
+</head>
+<body>
+
+<h1>Create Job Offer</h1>
+
+<form id="jobForm">
+    <input type="text" placeholder="Title" id="title" required /><br><br>
+    <textarea placeholder="Description" id="description" required></textarea><br><br>
+    <input type="number" placeholder="Salary" id="salary" required /><br><br>
+    <input type="text" placeholder="Location" id="location" required /><br><br>
+    <button type="submit">Create</button>
+</form>
+
+<script>
+    const user = JSON.parse(localStorage.getItem("loggedUser"));
+
+    if (!user) {
+        alert("Niste prijavljeni!");
+        window.location.href = "login.html";
+    }
+
+    document.getElementById("jobForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // ⛔ sprječava reload stranice
+
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const salary = document.getElementById("salary").value;
+        const location = document.getElementById("location").value;
+
+        fetch(`/api/jobs/${user.id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                salary: salary,
+                location: location
+            })
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Greška kod kreiranja posla");
+                return res.json();
+            })
+            .then(data => {
+                alert("Posao uspješno objavljen!");
+                console.log(data);
+
+                // opcionalno redirect
+                // window.location.href = "employer-jobs.html";
+            })
+            .catch(err => {
+                alert("Greška!");
+                console.error(err);
+            });
+    });
+</script>
+
+
+</body>
+</html>
