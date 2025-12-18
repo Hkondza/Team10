@@ -37,4 +37,10 @@ public class JobOfferController {
     public List<JobOffer> getAllJobs() {
         return jobOfferService.getAllJobs();
     }
+
+    @GetMapping("/employer/{employerId}")
+    public List<JobOffer> getAllJobsOfUser(@PathVariable Long employerId)
+    {
+        return jobOfferService.getJobsByEmployer(userRepository.getUserById(employerId));
+    }
 }

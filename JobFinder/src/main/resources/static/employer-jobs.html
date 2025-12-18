@@ -3,10 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>My Jobs</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #jobs {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 800px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .job-card h3 {
+            margin: 0 0 8px 0;
+        }
+
+        .job-card p {
+            margin: 4px 0;
+        }
+
+        .salary {
+            font-weight: bold;
+            color: #2c7be5;
+        }
+    </style>
 </head>
 <body>
 
 <h1>My Job Offers</h1>
+
 <div id="jobs"></div>
 
 <script>
@@ -17,20 +57,37 @@
     }
 
     fetch(`/api/jobs/employer/${user.id}`)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Failed to fetch jobs");
+            }
+            return res.json();
+        })
         .then(jobs => {
             const container = document.getElementById("jobs");
 
+            if (jobs.length === 0) {
+                container.innerHTML = "<p>You have not created any job offers yet.</p>";
+                return;
+            }
+
             jobs.forEach(job => {
                 const div = document.createElement("div");
+                div.className = "job-card";
+
                 div.innerHTML = `
-          <h3>${job.title}</h3>
-          <p>${job.description}</p>
-          <p>Salary: ${job.salary}</p>
-          <hr/>
-        `;
+                    <h3>${job.title}</h3>
+                    <p>${job.description}</p>
+                    <p class="salary">Salary: ${job.salary}</p>
+                    <p>Location: ${job.location ?? "N/A"}</p>
+                `;
+
                 container.appendChild(div);
             });
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Error loading jobs");
         });
 </script>
 
