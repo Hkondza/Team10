@@ -2,20 +2,18 @@ package hr.team10.jobfinder.backend.services;
 
 import hr.team10.jobfinder.backend.dto.RegisterRequest;
 import hr.team10.jobfinder.backend.model.User;
+import hr.team10.jobfinder.backend.repo.UserRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserService {
 
     private static PasswordService passwordService = new PasswordService();
-    private static final List<User> users = new ArrayList<>();
-    private static Long idCounter = 1L;
+    private final UserRepository userRepository;
 
-    public UserService(PasswordService passwordService) {
+    public UserService(PasswordService passwordService, UserRepository userRepository) {
         UserService.passwordService = passwordService;
+        this.userRepository = userRepository;
     }
 
     public static User register(RegisterRequest request) {
@@ -30,14 +28,12 @@ public class UserService {
                 request.role
         );
 
-        users.add(user);
         return user;
     }
 
 
-
-    public List<User> getAllUsers(){
-        return users;
+    public User getById(Long studentId) {
+        return userRepository.getOne(studentId);
     }
 }
 

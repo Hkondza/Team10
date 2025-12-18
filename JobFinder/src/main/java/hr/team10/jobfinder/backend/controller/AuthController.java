@@ -6,7 +6,11 @@ import hr.team10.jobfinder.backend.model.User;
 import hr.team10.jobfinder.backend.repo.UserRepository;
 import hr.team10.jobfinder.backend.services.PasswordService;
 import hr.team10.jobfinder.backend.services.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -31,15 +35,23 @@ public class AuthController {
 
     // LOGIN
     @PostMapping("/login")
-    public User login(@RequestBody LoginRequest req) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 
-        User user = userRepository.findByEmail(req.email)
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!PasswordService.matches(req.password, user.getPassword())) {
-            throw new RuntimeException("Wrong password");
+        if (!PasswordService.matches(request.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid credentials");
         }
 
-        return user;
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "email", user.getEmail(),
+                        "fullName", user.getFull_name(),
+                        "role", user.getRole()
+                )
+        );
     }
 }

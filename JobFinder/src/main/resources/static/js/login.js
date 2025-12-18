@@ -13,15 +13,22 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
             body: JSON.stringify(data)
         });
 
-        if (response.ok) {
-            // opcionalno spremiti user info
-            // localStorage.setItem("userEmail", email);
-
-            window.location.href = "main.html"; // ✅ redirect
-        } else {
+        if (!response.ok) {
             alert("Pogrešan email ili lozinka");
+            return;
         }
+
+        // ✅ BACKEND VRAĆA USER PODATKE
+        const user = await response.json();
+
+        // ✅ SPREMI U LOCAL STORAGE
+        localStorage.setItem("loggedUser", JSON.stringify(user));
+
+        // ✅ REDIRECT NA MAIN
+        window.location.href = "main.html";
+
     } catch (err) {
+        console.error(err);
         alert("Server nije dostupan");
     }
 });

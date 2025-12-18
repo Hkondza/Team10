@@ -1,124 +1,104 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JobFinder - Dashboard</title>
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobFinder - Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <!-- NAVBAR -->
-  <div class="navbar">
+
+<script>
+    // 🔐 PROVJERA LOGIN-A
+    const userJson = localStorage.getItem("loggedUser");
+
+    if (!userJson) {
+        window.location.href = "login.html";
+    }
+
+    const user = JSON.parse(userJson);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("profileName").innerText = user.fullName;
+        document.getElementById("profileNameHeader").innerText = user.fullName;
+        document.getElementById("profileEmail").innerText = user.email;
+        document.getElementById("profileEmail").href = "mailto:" + user.email;
+        document.getElementById("profileRole").innerText = user.role;
+    });
+</script>
+
+<!-- NAVBAR -->
+<div class="navbar">
     <div class="navbar-left">
-      <div class="logo">
-        <i class="fas fa-briefcase"></i>
-        JobFinder
-      </div>
-      <div class="nav-buttons">
-        <button class="btn-show-jobs">Show all jobs</button>
-      </div>
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search">
-      </div>
+        <div class="logo">
+            <i class="fas fa-briefcase"></i>
+            JobFinder
+        </div>
+        <div class="nav-buttons">
+            <button class="btn-show-jobs">Show all jobs</button>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search">
+        </div>
     </div>
 
     <div class="navbar-right">
-      <div class="filter-btn">
-        <i class="fas fa-sliders-h"></i>
-      </div>
-      <div class="messages">
-        <i class="fas fa-envelope"></i>
-        <span class="message-badge">2</span>
-      </div>
-      <div class="profile-avatar">
-        <i class="fas fa-user"></i>
-      </div>
+        <div class="messages">
+            <i class="fas fa-envelope"></i>
+            <span class="message-badge">2</span>
+        </div>
+        <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+        </div>
     </div>
-  </div>
+</div>
 
-  <!-- MAIN CONTAINER -->
-  <div class="main-container">
+<!-- MAIN CONTAINER -->
+<div class="main-container">
+
     <!-- LEFT SIDEBAR -->
     <div class="left-sidebar">
-      <div class="profile-card">
-        <div class="profile-pic">
-          <i class="fas fa-user"></i>
+        <div class="profile-card">
+            <div class="profile-pic">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-name" id="profileName">User</div>
+            <div class="profile-location">
+                <i class="fas fa-user-tag"></i>
+                <span id="profileRole">role</span>
+            </div>
         </div>
-        <div class="profile-name">Pero Perić</div>
-        <div class="profile-location">
-          <i class="fas fa-map-marker-alt"></i>
-          Zagreb, Hrvatska
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Work</div>
+            <div class="sidebar-item">Junior Developer</div>
+            <div class="sidebar-item">Full Stack Developer</div>
         </div>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-title">Work</div>
-        <div class="sidebar-item">Junior Developer</div>
-        <div class="sidebar-item">Full Stack Developer</div>
-        <div class="sidebar-item">Senior Developer</div>
-        <div class="sidebar-item">DevOps Engineer</div>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-title">Skills</div>
-        <div class="sidebar-item">JavaScript</div>
-        <div class="sidebar-item">React</div>
-        <div class="sidebar-item">Node.js</div>
-        <div class="sidebar-item">CSS/HTML</div>
-      </div>
     </div>
 
     <!-- RIGHT CONTENT -->
     <div class="right-content">
-      <div class="profile-header">
-        <div class="profile-name-title">Pero Perić</div>
-        <div class="profile-location-header">
-          <i class="fas fa-map-marker-alt"></i>
-          Zagreb, Hrvatska
-        </div>
-      </div>
-
-      <div class="about-section">
-        <div class="section-title">
-          <i class="fas fa-user-circle"></i>
-          About
-        </div>
-        
-        <div class="info-row">
-          <span class="info-label">Email:</span>
-          <span class="info-value"><a href="mailto:peroperc@gmail.com">peroperc@gmail.com</a></span>
+        <div class="profile-header">
+            <div class="profile-name-title" id="profileNameHeader">User</div>
         </div>
 
-        <div class="info-row">
-          <span class="info-label">Phone:</span>
-          <span class="info-value">+385911233456</span>
-        </div>
+        <div class="about-section">
+            <div class="section-title">
+                <i class="fas fa-user-circle"></i>
+                About
+            </div>
 
-        <div class="info-row">
-          <span class="info-label">Site:</span>
-          <span class="info-value"><a href="#">www.peroperc.com</a></span>
+            <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-value">
+          <a id="profileEmail" href="#">email</a>
+        </span>
+            </div>
         </div>
-
-        <div class="info-row">
-          <span class="info-label">CV:</span>
-          <span class="info-value"><a href="#">PeroPeric-CV.pdf</a></span>
-        </div>
-      </div>
-
-      <div class="section-divider"></div>
-
-      <div class="about-section">
-        <div class="section-title">
-          <i class="fas fa-file-alt"></i>
-          About
-        </div>
-        <div class="about-text">
-          Ja sam Pero Peric, vješt razvojni inženjer sa 5+ godina iskustva u razvoju web aplikacija. Specijaliziran sam u JavaScript i React tehnologijama sa fokusom na stvaranje modernih i korisničkih sučelja.
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
 </body>
 </html>
