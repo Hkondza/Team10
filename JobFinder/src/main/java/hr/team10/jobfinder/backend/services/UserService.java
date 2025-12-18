@@ -10,20 +10,20 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private final PasswordService passwordService;
-    private final List<User> users = new ArrayList<>();
-    private Long idCounter = 1L;
+    private static PasswordService passwordService = new PasswordService();
+    private static final List<User> users = new ArrayList<>();
+    private static Long idCounter = 1L;
 
     public UserService(PasswordService passwordService) {
-        this.passwordService = passwordService;
+        UserService.passwordService = passwordService;
     }
 
-    public User register(RegisterRequest request) {
+    public static User register(RegisterRequest request) {
 
         String hashed = passwordService.hashPassword(request.password);
 
         User user = new User(
-                idCounter++,
+                null,
                 request.fullName,
                 request.email,
                 hashed,
@@ -33,6 +33,8 @@ public class UserService {
         users.add(user);
         return user;
     }
+
+
 
     public List<User> getAllUsers(){
         return users;

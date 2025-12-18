@@ -4,6 +4,7 @@ import hr.team10.jobfinder.backend.dto.LoginRequest;
 import hr.team10.jobfinder.backend.dto.RegisterRequest;
 import hr.team10.jobfinder.backend.model.User;
 import hr.team10.jobfinder.backend.repo.UserRepository;
+import hr.team10.jobfinder.backend.services.PasswordService;
 import hr.team10.jobfinder.backend.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,15 +26,7 @@ public class AuthController {
             throw new RuntimeException("User already exists");
         }
 
-        User user = new User(
-                null,
-                req.fullName,
-                req.email,
-                req.password,
-                req.role
-        );
-
-        return userRepository.save(user);
+        return userRepository.save(UserService.register(req));
     }
 
     // LOGIN
@@ -43,7 +36,7 @@ public class AuthController {
         User user = userRepository.findByEmail(req.email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!user.getPassword().equals(req.password)) {
+        if (!PasswordService.matches(req.password, user.getPassword())) {
             throw new RuntimeException("Wrong password");
         }
 
