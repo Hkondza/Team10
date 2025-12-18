@@ -29,6 +29,9 @@
         <div class="profile-avatar">
             <i class="fas fa-user"></i>
         </div>
+        <button class="btn-logout" onclick="logout()">
+            Logout
+        </button>
     </div>
 </div>
 
@@ -103,7 +106,7 @@
 
         if (role === "student") {
             roleButtons.innerHTML = `
-                <button onclick="window.location.href='student-jobs.html'">
+                <button class="btn-show-jobs" onclick="window.location.href='student-jobs.html'">
                     Show all jobs
                 </button>
             `;
@@ -111,15 +114,22 @@
 
         if (role === "employer") {
             roleButtons.innerHTML = `
-                <button onclick="window.location.href='create-job.html'">
+                <button class="btn-show-jobs" onclick="window.location.href='create-job.html'">
                     Create job
                 </button>
-                <button onclick="window.location.href='employer-jobs.html'">
+                <button class="btn-show-jobs" onclick="window.location.href='employer-jobs.html'">
                     My jobs
                 </button>
             `;
         }
     });
+</script>
+
+<script>
+    function logout() {
+        localStorage.removeItem("loggedUser");
+        window.location.href = "login.html";
+    }
 </script>
 
 </body>

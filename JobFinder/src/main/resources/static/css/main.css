@@ -17,6 +17,11 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
     }
 
     .navbar-left {
@@ -94,6 +99,22 @@
       gap: 25px;
     }
 
+    .btn-logout {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-logout:hover {
+      background: white;
+      color: #16c4d4;
+    }
+
     .filter-btn {
       color: white;
       font-size: 20px;
@@ -145,6 +166,7 @@
     .main-container {
       display: flex;
       height: calc(100vh - 70px);
+      margin-top: 70px;
     }
 
     /* LEFT SIDEBAR */
@@ -237,7 +259,7 @@
     .right-content {
       flex: 1;
       background: white;
-      padding: 60px;
+      padding: 50px 60px 60px;
       overflow-y: auto;
     }
 
