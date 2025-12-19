@@ -44,3 +44,6 @@ public class UserService {
     }
 }
 
+//Trenutacna verzija coda nekrsi OCR - princip jer nemamo u backundu nikakvu provjeru
+// kojeg je user rola to se dogada u fontendu ali alipakcija nije dovoljno slozena da se to
+// promjeni.
