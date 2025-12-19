@@ -1,6 +1,3 @@
-// Dependency Inversion: Injected AuthService depends on abstractions (ApiClient, StorageAdapter).
-// Single Responsibility: Controller handles DOM/events; AuthService handles auth/API.
-// Liskov: LocalStorageAdapter can be swapped with MemoryStorageAdapter without breaking logic.
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -9,7 +6,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
     const { ApiClient, AuthService, LocalStorageAdapter, EmailPasswordCredentials } = window.JobFinder || {};
 
-    // Guard if core isn't loaded; fall back to direct fetch.
     if (!ApiClient || !AuthService || !LocalStorageAdapter) {
         try {
             const response = await fetch("/api/auth/login", {

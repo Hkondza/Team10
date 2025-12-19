@@ -1,6 +1,3 @@
-// Open/Closed: Added extensible validation rules without changing the validator implementation.
-// Interface Segregation: Split credentials (email/password) from profile (fullName/role).
-// Dependency Inversion: Use AuthService with injected ApiClient; UI depends on abstraction.
 document.getElementById("signupForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -11,7 +8,6 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
 
     const { ApiClient, AuthService, Validator, EmailPasswordCredentials, RegistrationProfile } = window.JobFinder || {};
 
-    // Fallback validation if core isn't loaded
     if (!Validator || !ApiClient || !AuthService) {
         if (!role) {
             alert("Odaberite ulogu");
@@ -36,12 +32,10 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
         return;
     }
 
-    // Build data via segregated interfaces
     const creds = new EmailPasswordCredentials(email, password);
     const profile = new RegistrationProfile(fullName, role);
     const data = { ...creds, ...profile };
 
-    // Extensible validation pipeline
     const validator = new Validator();
     validator.addRule(d => !d.role ? "Odaberite ulogu" : null);
     validator.addRule(d => d.password && d.password.length < 6 ? "Lozinka mora imati najmanje 6 znakova" : null);
@@ -53,7 +47,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
 
     try {
         const api = new ApiClient();
-        const auth = new AuthService(api, /* storage not needed here */ null);
+        const auth = new AuthService(api,  null);
         const response = await auth.register(data);
         if (response.ok) {
             alert("Registracija uspješna! Prijavite se.");

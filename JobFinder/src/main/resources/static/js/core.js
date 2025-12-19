@@ -1,4 +1,4 @@
-// Single Responsibility: ApiClient now only handles HTTP requests.
+// Single Responsibility
 class ApiClient {
   async post(url, body) {
     return fetch(url, {
@@ -9,8 +9,7 @@ class ApiClient {
   }
 }
 
-// Dependency Inversion: AuthService depends on abstractions (ApiClient, StorageAdapter)
-// instead of concrete implementations; both are injected.
+// Dependency Inversion
 class AuthService {
   constructor(apiClient, storageAdapter) {
     this.api = apiClient;
@@ -33,8 +32,7 @@ class AuthService {
   }
 }
 
-// Liskov: Introduced StorageAdapter with interchangeable implementations.
-// LocalStorageAdapter and MemoryStorageAdapter can be substituted without breaking behavior.
+// Liskov
 class StorageAdapter {
   getItem(_key) { throw new Error("Not implemented"); }
   setItem(_key, _value) { throw new Error("Not implemented"); }
@@ -61,7 +59,7 @@ class MemoryStorageAdapter extends StorageAdapter {
   removeItem(key) { this.map.delete(key); }
 }
 
-// Open/Closed: Validator allows adding new rules without changing its implementation.
+// Open/Closed
 class Validator {
   constructor() {
     this.rules = [];
@@ -74,7 +72,7 @@ class Validator {
   }
 }
 
-// Interface Segregation: Split minimal credential shape from profile info.
+// Interface Segregation
 class EmailPasswordCredentials {
   constructor(email, password) {
     this.email = email;
