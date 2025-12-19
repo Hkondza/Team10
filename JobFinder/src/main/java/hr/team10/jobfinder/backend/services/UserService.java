@@ -5,6 +5,8 @@ import hr.team10.jobfinder.backend.model.User;
 import hr.team10.jobfinder.backend.repo.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -35,5 +37,13 @@ public class UserService {
     public User getById(Long studentId) {
         return userRepository.getOne(studentId);
     }
+
+    public Optional<User> findByEmail(String email) {
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        return byEmail;
+    }
 }
 
+//Trenutacna verzija coda nekrsi OCR - princip jer nemamo u backundu nikakvu provjeru
+// kojeg je user rola to se dogada u fontendu ali alipakcija nije dovoljno slozena da se to
+// promjeni.

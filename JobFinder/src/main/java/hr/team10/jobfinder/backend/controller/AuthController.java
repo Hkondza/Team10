@@ -3,10 +3,8 @@ package hr.team10.jobfinder.backend.controller;
 import hr.team10.jobfinder.backend.dto.LoginRequest;
 import hr.team10.jobfinder.backend.dto.RegisterRequest;
 import hr.team10.jobfinder.backend.model.User;
-import hr.team10.jobfinder.backend.repo.UserRepository;
 import hr.team10.jobfinder.backend.services.PasswordService;
 import hr.team10.jobfinder.backend.services.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,45 +12,42 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin
 public class AuthController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public AuthController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
-    // REGISTER
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest req) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        User user = UserService.register( new RegisterRequest(
+                request.getEmail(),
+                request.getFullName(),
+                request.getPassword(),
+                request.getRole())
+        );
 
-        if (userRepository.existsByEmail(req.email)) {
-            throw new RuntimeException("User already exists");
-        }
-
-        return userRepository.save(UserService.register(req));
+        return ResponseEntity.ok(user);
     }
 
-    // LOGIN
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        if (!PasswordService.matches(request.getPassword(), user.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Invalid credentials");
-        }
-
-
-        return ResponseEntity.ok(
-                Map.of(
-                        "id",user.getId(),
-                        "email", user.getEmail(),
-                        "fullName", user.getFull_name(),
-                        "role", user.getRole()
-                )
-        );
+        return userService.findByEmail(request.getEmail())
+                .filter(user -> PasswordService.matches(
+                        request.getPassword(),
+                        user.getPassword()
+                ))
+                .map(user -> ResponseEntity.ok(
+                        Map.of(
+                                "id", user.getId(),
+                                "email", user.getEmail(),
+                                "fullName", user.getFull_name(),
+                                "role", user.getRole()
+                        )
+                ))
+                .orElse(ResponseEntity.status(401).build());
     }
 }
