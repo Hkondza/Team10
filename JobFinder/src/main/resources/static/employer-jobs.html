@@ -69,7 +69,14 @@
             const container = document.getElementById("jobs");
 
             if (jobs.length === 0) {
-                container.innerHTML = "<p>You have not created any job offers yet.</p>";
+                                container.innerHTML = `
+                                    <div style="text-align: center; margin-top: 40px;">
+                                        <p style="font-size: 1.2em;">
+                                            You haven't created any jobs yet.
+                                            <a href="create-job.html" style="color: #007bff; text-decoration: none;">Create a new job.</a>
+                                        </p>
+                                    </div>
+                                `;
                 return;
             }
 
