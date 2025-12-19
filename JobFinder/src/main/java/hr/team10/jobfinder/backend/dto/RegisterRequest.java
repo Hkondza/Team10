@@ -1,7 +1,5 @@
 package hr.team10.jobfinder.backend.dto;
 
-import hr.team10.jobfinder.backend.model.Role;
-
 public class RegisterRequest {
 
     public String fullName;
