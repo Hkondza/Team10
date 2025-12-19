@@ -1,5 +1,6 @@
 package hr.team10.jobfinder.backend.model;
 
+import hr.team10.jobfinder.backend.interfaces.ApplicationAction;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "job_applications")
-public class JobApplication {
+public class JobApplication implements ApplicationAction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +33,10 @@ public class JobApplication {
 
     // 📌 Status prijave (PENDING, ACCEPTED, REJECTED)
     private String status;
+
+    @Override
+    public void apply() {
+        //trenutacno nije implementiran ali JobApplication može zamijeniti ApplicationAction
+        // sto ce zadovoljeti LSP
+    }
 }

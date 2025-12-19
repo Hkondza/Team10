@@ -1,6 +1,8 @@
 package hr.team10.jobfinder.backend.services;
 
 import hr.team10.jobfinder.backend.dto.RegisterRequest;
+import hr.team10.jobfinder.backend.interfaces.UserReader;
+import hr.team10.jobfinder.backend.interfaces.UserWriter;
 import hr.team10.jobfinder.backend.model.User;
 import hr.team10.jobfinder.backend.repo.UserRepository;
 import org.springframework.stereotype.Service;
@@ -8,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserWriter , UserReader {
 
     private static PasswordService passwordService = new PasswordService();
     private final UserRepository userRepository;
@@ -41,6 +43,16 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         Optional<User> byEmail = userRepository.findByEmail(email);
         return byEmail;
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return Optional.of(userRepository.getOne(id));
+    }
+
+    @Override
+    public User save(User user) {
+        return null;
     }
 }
 

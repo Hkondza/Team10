@@ -2,6 +2,9 @@ package hr.team10.jobfinder.backend.controller;
 
 import hr.team10.jobfinder.backend.dto.LoginRequest;
 import hr.team10.jobfinder.backend.dto.RegisterRequest;
+import hr.team10.jobfinder.backend.interfaces.PasswordEncoderService;
+import hr.team10.jobfinder.backend.interfaces.UserReader;
+import hr.team10.jobfinder.backend.interfaces.UserWriter;
 import hr.team10.jobfinder.backend.model.User;
 import hr.team10.jobfinder.backend.services.PasswordService;
 import hr.team10.jobfinder.backend.services.UserService;
@@ -16,9 +19,14 @@ import java.util.Map;
 public class AuthController {
 
     private final UserService userService;
-
-    public AuthController(UserService userService) {
+    private final UserReader userReader;
+    private final UserWriter userWriter;
+    private final PasswordEncoderService passwordService;
+    public AuthController(UserService userService, UserReader userReader, UserWriter userWriter, PasswordEncoderService passwordService) {
         this.userService = userService;
+        this.userReader = userReader;
+        this.userWriter = userWriter;
+        this.passwordService = passwordService;
     }
 
     @PostMapping("/register")
