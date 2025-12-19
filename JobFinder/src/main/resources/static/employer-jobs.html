@@ -28,6 +28,7 @@
 </div>
 
 <h1>My Job Offers</h1>
+
 <div id="jobs"></div>
 
 <script>
@@ -58,20 +59,37 @@
     }
 
     fetch(`/api/jobs/employer/${user.id}`)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Failed to fetch jobs");
+            }
+            return res.json();
+        })
         .then(jobs => {
             const container = document.getElementById("jobs");
 
+            if (jobs.length === 0) {
+                container.innerHTML = "<p>You have not created any job offers yet.</p>";
+                return;
+            }
+
             jobs.forEach(job => {
                 const div = document.createElement("div");
+                div.className = "job-card";
+
                 div.innerHTML = `
-          <h3>${job.title}</h3>
-          <p>${job.description}</p>
-          <p>Salary: ${job.salary}</p>
-          <hr/>
-        `;
+                    <h3>${job.title}</h3>
+                    <p>${job.description}</p>
+                    <p class="salary">Salary: ${job.salary}</p>
+                    <p>Location: ${job.location ?? "N/A"}</p>
+                `;
+
                 container.appendChild(div);
             });
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Error loading jobs");
         });
 </script>
 
