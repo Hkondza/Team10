@@ -2,12 +2,11 @@ package hr.team10.jobfinder.backend.controller;
 
 import hr.team10.jobfinder.backend.dto.LoginRequest;
 import hr.team10.jobfinder.backend.dto.RegisterRequest;
-import hr.team10.jobfinder.backend.interfaces.PasswordEncoderService;
-import hr.team10.jobfinder.backend.interfaces.UserReader;
-import hr.team10.jobfinder.backend.interfaces.UserWriter;
 import hr.team10.jobfinder.backend.model.User;
+import hr.team10.jobfinder.backend.repo.UserRepository;
 import hr.team10.jobfinder.backend.services.PasswordService;
 import hr.team10.jobfinder.backend.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,47 +14,46 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin
 public class AuthController {
 
-    private final UserService userService;
-    private final UserReader userReader;
-    private final UserWriter userWriter;
-    private final PasswordEncoderService passwordService;
-    public AuthController(UserService userService, UserReader userReader, UserWriter userWriter, PasswordEncoderService passwordService) {
-        this.userService = userService;
-        this.userReader = userReader;
-        this.userWriter = userWriter;
-        this.passwordService = passwordService;
+    private final UserRepository userRepository;
+    private final PasswordService ps = new PasswordService();
+
+    public AuthController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
+    // REGISTER
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        User user = UserService.register( new RegisterRequest(
-                request.getEmail(),
-                request.getFullName(),
-                request.getPassword(),
-                request.getRole())
-        );
+    public User register(@RequestBody RegisterRequest req) {
 
-        return ResponseEntity.ok(user);
+        if (userRepository.existsByEmail(req.email)) {
+            throw new RuntimeException("User already exists");
+        }
+
+        return userRepository.save(UserService.register(req));
     }
 
+    // LOGIN
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        return userService.findByEmail(request.getEmail())
-                .filter(user -> PasswordService.matches(
-                        request.getPassword(),
-                        user.getPassword()
-                ))
-                .map(user -> ResponseEntity.ok(
-                        Map.of(
-                                "id", user.getId(),
-                                "email", user.getEmail(),
-                                "fullName", user.getFull_name(),
-                                "role", user.getRole()
-                        )
-                ))
-                .orElse(ResponseEntity.status(401).build());
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!ps.matches(request.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid credentials");
+        }
+
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "id",user.getId(),
+                        "email", user.getEmail(),
+                        "fullName", user.getFull_name(),
+                        "role", user.getRole()
+                )
+        );
     }
 }

@@ -18,7 +18,7 @@ public class PasswordService implements PasswordEncoderService {
         return encoder.encode(rawPassword);
     }
 
-    public static boolean matches(String rawPassword, String hashedPassword) {
+    public boolean matches(String rawPassword, String hashedPassword) {
         return encoder.matches(rawPassword, hashedPassword);
     }
 }
