@@ -17,6 +17,7 @@ import java.util.Map;
 public class AuthController {
 
     private final UserRepository userRepository;
+    private final PasswordService ps = new PasswordService();
 
     public AuthController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -40,7 +41,7 @@ public class AuthController {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!PasswordService.matches(request.getPassword(), user.getPassword())) {
+        if (!ps.matches(request.getPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid credentials");
         }

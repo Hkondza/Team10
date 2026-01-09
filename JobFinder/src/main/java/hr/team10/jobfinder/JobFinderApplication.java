@@ -2,8 +2,6 @@ package hr.team10.jobfinder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import java.awt.Desktop;
-import java.net.URI;
 
 @SpringBootApplication
 public class JobFinderApplication {

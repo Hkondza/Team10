@@ -1,10 +1,11 @@
 package hr.team10.jobfinder.backend.services;
 
+import hr.team10.jobfinder.backend.interfaces.PasswordEncoderService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PasswordService {
+public class PasswordService implements PasswordEncoderService {
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -12,7 +13,12 @@ public class PasswordService {
         return encoder.encode(rawPassword);
     }
 
-    public static boolean  matches(String rawPassword, String hashedPassword) {
+    @Override
+    public String encode(String rawPassword) {
+        return encoder.encode(rawPassword);
+    }
+
+    public boolean matches(String rawPassword, String hashedPassword) {
         return encoder.matches(rawPassword, hashedPassword);
     }
 }
