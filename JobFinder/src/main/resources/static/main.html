@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JobFinder - Dashboard</title>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
 </head>
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
     <div class="navbar-left">
         <div class="logo">
-            <i class="fas fa-briefcase"></i>
-            JobFinder
+            <i class="fas fa-briefcase"></i> JobFinder
         </div>
-
-        <!-- ROLE BASED BUTTONS -->
         <div class="nav-buttons" id="roleButtons"></div>
     </div>
 
@@ -29,28 +25,20 @@
         <div class="profile-avatar">
             <i class="fas fa-user"></i>
         </div>
-        <button class="btn-logout" onclick="logout()">
-            Logout
-        </button>
+        <button class="btn-logout">Logout</button>
     </div>
 </div>
 
-<!-- MAIN CONTAINER -->
 <div class="main-container">
-
-    <!-- LEFT SIDEBAR -->
     <div class="left-sidebar">
         <div class="profile-card">
-            <div class="profile-pic">
-                <i class="fas fa-user"></i>
-            </div>
+            <div class="profile-pic"><i class="fas fa-user"></i></div>
             <div class="profile-name" id="profileName">User</div>
             <div class="profile-location">
                 <i class="fas fa-user-tag"></i>
                 <span id="profileRole">role</span>
             </div>
         </div>
-
         <div class="sidebar-section">
             <div class="sidebar-title">Work</div>
             <div class="sidebar-item">Junior Developer</div>
@@ -58,79 +46,21 @@
         </div>
     </div>
 
-    <!-- RIGHT CONTENT -->
     <div class="right-content">
         <div class="profile-header">
             <div class="profile-name-title" id="profileNameHeader">User</div>
         </div>
-
         <div class="about-section">
-            <div class="section-title">
-                <i class="fas fa-user-circle"></i>
-                About
-            </div>
-
+            <div class="section-title"><i class="fas fa-user-circle"></i> About</div>
             <div class="info-row">
                 <span class="info-label">Email:</span>
-                <span class="info-value">
-                    <a id="profileEmail" href="#">email</a>
-                </span>
+                <span class="info-value"><a id="profileEmail" href="#">email</a></span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- SCRIPT -->
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-
-        // 🔐 LOGIN CHECK
-        const userJson = localStorage.getItem("loggedUser");
-        if (!userJson) {
-            window.location.href = "login.html";
-            return;
-        }
-
-        const user = JSON.parse(userJson);
-
-        // PROFILE INFO
-        document.getElementById("profileName").innerText = user.fullName;
-        document.getElementById("profileNameHeader").innerText = user.fullName;
-        document.getElementById("profileEmail").innerText = user.email;
-        document.getElementById("profileEmail").href = "mailto:" + user.email;
-        document.getElementById("profileRole").innerText = user.role;
-
-        // ROLE BASED BUTTONS
-        const roleButtons = document.getElementById("roleButtons");
-        const role = user.role.toLowerCase();
-
-        if (role === "student") {
-            roleButtons.innerHTML = `
-                <button class="btn-show-jobs" onclick="window.location.href='student-jobs.html'">
-                    Show all jobs
-                </button>
-            `;
-        }
-
-        if (role === "employer") {
-            roleButtons.innerHTML = `
-                <button class="btn-show-jobs" onclick="window.location.href='create-job.html'">
-                    Create job
-                </button>
-                <button class="btn-show-jobs" onclick="window.location.href='employer-jobs.html'">
-                    My jobs
-                </button>
-            `;
-        }
-    });
-</script>
-
-<script>
-    function logout() {
-        localStorage.removeItem("loggedUser");
-        window.location.href = "login.html";
-    }
-</script>
+<script src="js/main.js"></script>
 
 </body>
 </html>
